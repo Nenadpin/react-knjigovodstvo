@@ -43,11 +43,12 @@
 }
 .igra {
   display: grid;
+  border: 1px solid black;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 25px;
   width: 520px;
-  height: 350px;
-  padding-top: 5px;
+  height: 330px;
+  padding: 5px;
   margin: auto;
   text-align: left;
 }
@@ -59,4 +60,5 @@
   margin: auto;
   align-items: center;
   display: block;
+  padding-top: 10px;
 }

@@ -21,7 +21,9 @@ for (let z=0;z<4;z++){
       t=t+1
       pitanje[j]=0
       temp[j]=0
-
+      if(t===4){
+        props.endOfGame(24)
+      }
     }
   }
 
@@ -35,10 +37,6 @@ for (let z=0;z<4;z++){
       }
     }
     }
-  console.log(pitanje)
-  console.log(props.zadatak) 
-  console.log(slike.length)
-  console.log(t)
 
   return (
     <div className="prviRed">

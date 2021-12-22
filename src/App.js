@@ -32,13 +32,21 @@ function App() {
     } else {
       pokusaj.push(a);
       setCount(count + 1);
-      console.log(pokusaj);
+    }
+  }
+
+  function ups(){
+    if (count>0 && count%4!==0){
+      setCount(count-1)
+      pokusaj.pop()
+    }else if(count===24){
+      window.location.reload(false)
     }
   }
   return (
     <div className="App">
       <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo" onClick={()=>ups()} />
         <div className="zadatak">
           <button onClick={() => klik(1)}>
             <img src={skocko} alt="" />
@@ -68,32 +76,32 @@ function App() {
               <div className="Odgovor">
                 <div className="red">
                   {count >= 4 ? (
-                    <Odgovor zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor zadatak={pocetak} proba={pokusaj} endOfGame={setCount} />
                   ) : null}
                 </div>
                 <div className="red">
                   {count >= 8 ? (
-                    <Odgovor2 zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor2 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
                   ) : null}
                 </div>
                 <div className="red">
                   {count >= 12 ? (
-                    <Odgovor3 zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor3 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
                   ) : null}
                 </div>
                 <div className="red">
                   {count >= 16 ? (
-                    <Odgovor4 zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor4 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
                   ) : null}
                 </div>
                 <div className="red">
                   {count >= 20 ? (
-                    <Odgovor5 zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor5 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
                   ) : null}
                 </div>
                 <div className="red">
                   {count === 24 ? (
-                    <Odgovor6 zadatak={pocetak} proba={pokusaj} />
+                    <Odgovor6 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
                   ) : null}
                 </div>
               </div>
@@ -101,7 +109,7 @@ function App() {
           </div>
         ) : null}
         <div>
-          {count === 24 ? <Resenje text={count} zadato={pocetak} /> : null}
+          {count >= 24 ? <Resenje text={count} zadato={pocetak} /> : null}
         </div>
       </div>
     </div>
