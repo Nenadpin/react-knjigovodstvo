@@ -1,119 +1,155 @@
-import { useState } from "react";
-import logo from "./img/skocko.png";
 import "./App.css";
-import skocko from "./img/1.png";
-import tref from "./img/2.png";
-import pik from "./img/3.png";
-import karo from "./img/4.png";
-import herc from "./img/5.png";
-import zvezda from "./img/6.png";
-import Odgovor from "./components/Odgovor";
-import Odgovor2 from "./components/Odgovor2";
-import Odgovor3 from "./components/Odgovor3";
-import Odgovor4 from "./components/Odgovor4";
-import Odgovor5 from "./components/Odgovor5";
-import Odgovor6 from "./components/Odgovor6";
-import PrviPokusaj from "./components/PrviPokusaj.js";
-import Resenje from "./components/resenje";
-
+import { useState } from "react";
 let pocetak = [];
 let pokusaj = [];
-
-for (let j = 0; j < 4; j++) {
-  pocetak.push(Math.floor(Math.random() * 6) + 1);
-}
+let igrac = true;
+let tekst = "";
+let pobednik = null;
+let igra = true;
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  function klik(a) {
-    if (count === 25) {
-      window.location.reload(false);
-    } else {
-      pokusaj.push(a);
-      setCount(count + 1);
+  const [dugme1, promeni1] = useState(".");
+  const [dugme2, promeni2] = useState(".");
+  const [dugme3, promeni3] = useState(".");
+  const [dugme4, promeni4] = useState(".");
+  const [dugme5, promeni5] = useState(".");
+  const [dugme6, promeni6] = useState(".");
+  const [dugme7, promeni7] = useState(".");
+  const [dugme8, promeni8] = useState(".");
+  const [dugme9, promeni9] = useState(".");
+  pokusaj[0] = pocetak[0] + pocetak[1] + pocetak[2];
+  pokusaj[1] = pocetak[3] + pocetak[4] + pocetak[5];
+  pokusaj[2] = pocetak[6] + pocetak[7] + pocetak[8];
+  pokusaj[3] = pocetak[0] + pocetak[3] + pocetak[6];
+  pokusaj[4] = pocetak[1] + pocetak[4] + pocetak[7];
+  pokusaj[5] = pocetak[2] + pocetak[5] + pocetak[8];
+  pokusaj[6] = pocetak[0] + pocetak[4] + pocetak[8];
+  pokusaj[7] = pocetak[2] + pocetak[4] + pocetak[6];
+  if (igrac) {
+    tekst = "Sledeci igrac: X";
+  } else {
+    tekst = "Sledeci igrac: O";
+  }
+  if (pokusaj.includes(3)) {
+    pobednik = "Podedio je igrac X";
+    igra = false;
+  } else if (pokusaj.includes(0)) {
+    pobednik = "Pobedio je igrac O";
+    igra = false;
+  }
+  function Klik(a) {
+    if (igra) {
+      if (a === 1 && dugme1 === ".") {
+        if (igrac) {
+          promeni1("X");
+          pocetak[0] = 1;
+          igrac = !igrac;
+        } else {
+          promeni1("O");
+          pocetak[0] = 0;
+          igrac = !igrac;
+        }
+      } else if (a === 2 && dugme2 === ".") {
+        if (igrac) {
+          promeni2("X");
+          igrac = !igrac;
+          pocetak[1] = 1;
+        } else {
+          promeni2("O");
+          igrac = !igrac;
+          pocetak[1] = 0;
+        }
+      } else if (a === 3 && dugme3 === ".") {
+        if (igrac) {
+          promeni3("X");
+          igrac = !igrac;
+          pocetak[2] = 1;
+        } else {
+          promeni3("O");
+          igrac = !igrac;
+          pocetak[2] = 0;
+        }
+      } else if (a === 4 && dugme4 === ".") {
+        if (igrac) {
+          promeni4("X");
+          igrac = !igrac;
+          pocetak[3] = 1;
+        } else {
+          promeni4("O");
+          igrac = !igrac;
+          pocetak[3] = 0;
+        }
+      } else if (a === 5 && dugme5 === ".") {
+        if (igrac) {
+          promeni5("X");
+          igrac = !igrac;
+          pocetak[4] = 1;
+        } else {
+          promeni5("O");
+          igrac = !igrac;
+          pocetak[4] = 0;
+        }
+      } else if (a === 6 && dugme6 === ".") {
+        if (igrac) {
+          promeni6("X");
+          igrac = !igrac;
+          pocetak[5] = 1;
+        } else {
+          promeni6("O");
+          igrac = !igrac;
+          pocetak[5] = 0;
+        }
+      } else if (a === 7 && dugme7 === ".") {
+        if (igrac) {
+          promeni7("X");
+          igrac = !igrac;
+          pocetak[6] = 1;
+        } else {
+          promeni7("O");
+          igrac = !igrac;
+          pocetak[6] = 0;
+        }
+      } else if (a === 8 && dugme8 === ".") {
+        if (igrac) {
+          promeni8("X");
+          igrac = !igrac;
+          pocetak[7] = 1;
+        } else {
+          promeni8("O");
+          igrac = !igrac;
+          pocetak[7] = 0;
+        }
+      } else if (a === 9 && dugme9 === ".") {
+        if (igrac) {
+          promeni9("X");
+          igrac = !igrac;
+          pocetak[8] = 1;
+        } else {
+          promeni9("O");
+          igrac = !igrac;
+          pocetak[8] = 0;
+        }
+      }
     }
   }
 
-  function ups(){
-    if (count>0 && count%4!==0){
-      setCount(count-1)
-      pokusaj.pop()
-    }else if(count===24){
-      window.location.reload(false)
-    }
-  }
   return (
     <div className="App">
       <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" onClick={()=>ups()} />
-        <div className="zadatak">
-          <button onClick={() => klik(1)}>
-            <img src={skocko} alt="" />
-          </button>
-          <button onClick={() => klik(2)}>
-            <img src={tref} alt="" />
-          </button>
-          <button onClick={() => klik(3)}>
-            <img src={pik} alt="" />
-          </button>
-          <button onClick={() => klik(4)}>
-            <img src={karo} alt="" />
-          </button>
-          <button onClick={() => klik(5)}>
-            <img src={herc} alt="" />
-          </button>
-          <button onClick={() => klik(6)}>
-            <img src={zvezda} alt="" />
-          </button>
+        <div className="igra">
+          <button onClick={() => Klik(1)}>{dugme1}</button>
+          <button onClick={() => Klik(2)}>{dugme2}</button>
+          <button onClick={() => Klik(3)}>{dugme3}</button>
+          <button onClick={() => Klik(4)}>{dugme4}</button>
+          <button onClick={() => Klik(5)}>{dugme5}</button>
+          <button onClick={() => Klik(6)}>{dugme6}</button>
+          <button onClick={() => Klik(7)}>{dugme7}</button>
+          <button onClick={() => Klik(8)}>{dugme8}</button>
+          <button onClick={() => Klik(9)}>{dugme9}</button>
         </div>
-        {count > 0 && count < 25 ? (
-          <div>
-            <div className="igra">
-              <div>
-                <PrviPokusaj text={pokusaj} />
-              </div>
-              <div className="Odgovor">
-                <div className="red">
-                  {count >= 4 ? (
-                    <Odgovor zadatak={pocetak} proba={pokusaj} endOfGame={setCount} />
-                  ) : null}
-                </div>
-                <div className="red">
-                  {count >= 8 ? (
-                    <Odgovor2 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
-                  ) : null}
-                </div>
-                <div className="red">
-                  {count >= 12 ? (
-                    <Odgovor3 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
-                  ) : null}
-                </div>
-                <div className="red">
-                  {count >= 16 ? (
-                    <Odgovor4 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
-                  ) : null}
-                </div>
-                <div className="red">
-                  {count >= 20 ? (
-                    <Odgovor5 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
-                  ) : null}
-                </div>
-                <div className="red">
-                  {count === 24 ? (
-                    <Odgovor6 zadatak={pocetak} proba={pokusaj} endOfGame={setCount}/>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
-        <div>
-          {count >= 24 ? <Resenje text={count} zadato={pocetak} /> : null}
-        </div>
+        {igra ? <p>{tekst}</p> : <p>{pobednik}</p>}
       </div>
     </div>
   );
 }
-
 export default App;

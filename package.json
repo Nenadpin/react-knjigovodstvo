@@ -1,5 +1,5 @@
 {
-  "name": "creact-slagalica",
+  "name": "Tictack",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Nenadpin/react-slagalica.git",
+  "author": "nenad <nenadpin@yahoo.com>",
+  "license": "MIT"
 }
