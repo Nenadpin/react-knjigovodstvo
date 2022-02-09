@@ -1,23 +1,102 @@
-.App {
-  text-align: center;
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: papayawhip;
+  margin-top: 50px;
 }
-
-.App-header {
-  background: rgb(28, 157, 231);
-  min-height: 100vh;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.meni {
+  position: fixed;
+  top: 0%;
+  padding: 5px;
+  height: 40px;
+  width: 100vw;
+  background-color: mediumblue;
+}
+.meniBtn {
+  border: none;
+  width: 150px;
+  height: 40px;
+  font-size: x-large;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background-color: mediumblue;
+  color: silver;
+}
+.meniBtn:hover {
+  border: 1px solid gray;
   color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.meniBtn:active {
+  border: none;
+  color: silver;
+  box-shadow: none;
+}
+div.fixed {
+  display: block;
+  position: fixed;
+  width: 600px;
+  left: 100px;
+  top: 52px;
+  border: 3px solid #5f5604;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: palegoldenrod;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.operacija {
+  margin: 0;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.igra {
-  align-items: center;
-  display: block;
-  width: 200px;
-  height: 200px;
-  padding-top: 300px;
-  margin: auto;
-  text-align: center;
+input,
+button {
+  height: 45px;
+  border: 1px solid;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  left: 265px;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.slika {
+  position: absolute;
+  top: 30px;
+  right: 80px;
+  height: 100px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.slikaP {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.slika:active,
+.slikaP:active {
+  box-shadow: none;
+}
+
+input {
+  text-transform: uppercase;
+  height: 41px;
+  margin-right: 5px;
+}
+.btn {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.btn:active {
+  box-shadow: none;
+}
+
+pre {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: papayawhip;
+  margin-top: 280px;
+  height: 100vh;
 }
