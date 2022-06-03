@@ -86,34 +86,36 @@ function Nivelacija({ setActive }) {
   }
 
   function LevelComplete() {
-    for (let i = 0; i < levelDetail.length; i++) {
-      const tIndex = (e) => e.id === levelDetail[i].id;
-      const sIndex = Baza.findIndex(tIndex);
-      Baza[sIndex].price = levelDetail[i].nPrice;
+    if (levelDetail.length) {
+      for (let i = 0; i < levelDetail.length; i++) {
+        const tIndex = (e) => e.id === levelDetail[i].id;
+        const sIndex = Baza.findIndex(tIndex);
+        Baza[sIndex].price = levelDetail[i].nPrice;
+      }
+      localStorage.setItem("baza", JSON.stringify(Baza));
+      let tempPrice = parseFloat(localStorage.getItem("lager"));
+      tempPrice += racun;
+      localStorage.setItem("lager", tempPrice);
+      const levelTotall = (br, details) => {
+        return { br: br, details: details };
+      };
+      if (!localStorage.getItem("Nivelacija")) {
+        let NivelacijaDetails = [];
+        NivelacijaDetails[0] = levelTotall(
+          `Nivelacija br: ${idNivelacije} datum ${datumStr} Razlika u ceni ==> ${racun} din`,
+          levelDetail
+        );
+        localStorage.setItem("Nivelacija", JSON.stringify(NivelacijaDetails));
+      } else {
+        let NivelacijaDetails = JSON.parse(localStorage.getItem("Nivelacija"));
+        NivelacijaDetails[NivelacijaDetails.length] = levelTotall(
+          `Nivelacija br: ${idNivelacije} datum ${datumStr} Razlika u ceni ==> ${racun} din`,
+          levelDetail
+        );
+        localStorage.setItem("Nivelacija", JSON.stringify(NivelacijaDetails));
+      }
+      setActive(0);
     }
-    localStorage.setItem("baza", JSON.stringify(Baza));
-    let tempPrice = parseFloat(localStorage.getItem("lager"));
-    tempPrice += racun;
-    localStorage.setItem("lager", tempPrice);
-    const levelTotall = (br, details) => {
-      return { br: br, details: details };
-    };
-    if (!localStorage.getItem("Nivelacija")) {
-      let NivelacijaDetails = [];
-      NivelacijaDetails[0] = levelTotall(
-        `Nivelacija br: ${idNivelacije} datum ${datumStr} Razlika u ceni ==> ${racun} din`,
-        levelDetail
-      );
-      localStorage.setItem("Nivelacija", JSON.stringify(NivelacijaDetails));
-    } else {
-      let NivelacijaDetails = JSON.parse(localStorage.getItem("Nivelacija"));
-      NivelacijaDetails[NivelacijaDetails.length] = levelTotall(
-        `Nivelacija br: ${idNivelacije} datum ${datumStr} Razlika u ceni ==> ${racun} din`,
-        levelDetail
-      );
-      localStorage.setItem("Nivelacija", JSON.stringify(NivelacijaDetails));
-    }
-    setActive(0);
   }
 
   return (

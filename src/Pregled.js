@@ -63,8 +63,8 @@ function Pregled({ setActive }) {
                 src={saveImg}
                 alt=""
                 onClick={() => {
-                  setIdPregled("prodaja")
-                  setDetalji(false)
+                  setIdPregled("prodaja");
+                  setDetalji(false);
                 }}
               ></img>
               <span style={{ marginTop: "20px" }}>PRODAJA</span>
@@ -85,8 +85,8 @@ function Pregled({ setActive }) {
                 src={buyImg}
                 alt=""
                 onClick={() => {
-                  setIdPregled("nabavka")
-                  setDetalji(false)
+                  setIdPregled("nabavka");
+                  setDetalji(false);
                 }}
               ></img>
               <span style={{ marginTop: "20px" }}>NABAVKA</span>
@@ -107,10 +107,9 @@ function Pregled({ setActive }) {
                 src={changeImg}
                 alt=""
                 onClick={() => {
-                  setIdPregled("nivelacija")
-                  setDetalji(false)
-                }
-                }
+                  setIdPregled("nivelacija");
+                  setDetalji(false);
+                }}
               ></img>
               <span style={{ marginTop: "20px" }}>NIVELACIJA</span>
             </div>
@@ -146,29 +145,29 @@ function Pregled({ setActive }) {
           maxHeight: "800px",
           overflowY: "auto",
           marginLeft: "90px",
-          marginTop: "230px",
+          marginTop: "250px",
         }}
       >
         {idPregled === "PROIZVODI"
           ? prikaz
-            .filter((x) => x.stock !== 0)
-            .map(({ id, name, price, stock }) => (
-              <p key={id} style={{ margin: "0px" }}>
-                {id} {name} {price} - {stock} kom
-              </p>
-            ))
+              .filter((x) => x.stock !== 0)
+              .map(({ id, name, price, stock }) => (
+                <p key={id} style={{ margin: "0px" }}>
+                  {id} {name} {price} - {stock} kom
+                </p>
+              ))
           : prikaz.map(({ br }) => (
-            <p key={br} style={{ margin: "0px" }}>
-              <button
-                className="btn"
-                style={{ height: "30px" }}
-                onClick={() => Prikazi(br)}
-              >
-                <img src={delImg} alt=""></img>
-              </button>
-              {br}{" "}
-            </p>
-          ))}
+              <p key={br} style={{ margin: "0px" }}>
+                <button
+                  className="btn"
+                  style={{ height: "30px" }}
+                  onClick={() => Prikazi(br)}
+                >
+                  <img src={delImg} alt=""></img>
+                </button>
+                {br}{" "}
+              </p>
+            ))}
       </pre>
     </div>
   );

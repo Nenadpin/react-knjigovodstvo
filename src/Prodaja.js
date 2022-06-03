@@ -3,6 +3,7 @@ import searchImg from "./img/search.png";
 import okImg from "./img/ok.png";
 import delImg from "./img/close.png";
 import saveImg from "./img/save.png";
+import openImg from "./img/open.png";
 
 function Prodaja({ setActive }) {
   let datum = new Date();
@@ -28,6 +29,7 @@ function Prodaja({ setActive }) {
   const [ArtPrice, setArtPrice] = useState(0);
   const inputRef = useRef();
   const artRef = useRef();
+  const selector = useRef();
   const [sellDetail, setsellDetail] = useState([]);
   const [racun, setRacun] = useState(0);
 
@@ -78,94 +80,185 @@ function Prodaja({ setActive }) {
       setsellDetail(list);
     }
   }
+  const showFile = (e) => {
+    e.preventDefault();
+    if (e.target.files[0].name.split(".").pop().toLowerCase() === "json") {
+      let count = 0;
+      let tempLager = 0;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const sellData = JSON.parse(e.target.result);
+
+        let prodajaDetails = [];
+        if (localStorage.getItem("prodaja")) {
+          prodajaDetails = JSON.parse(localStorage.getItem("prodaja"));
+        }
+        tempLager = parseFloat(JSON.parse(localStorage.getItem("lager")));
+        if (!sellData[0]) {
+          alert("Ucitali ste pogresan fajl");
+          return;
+        }
+        let currentDate = sellData[
+          sellData.length - 1
+        ].SDCTime_ServerTimeZone.substring(0, 11);
+
+        prodajaDetails.push({
+          br: "",
+          details: [],
+        });
+
+        for (let i = sellData.length - 1; i > -1; i--) {
+          if (
+            sellData[i].SDCTime_ServerTimeZone.substring(0, 11) !== currentDate
+          ) {
+            currentDate = sellData[i].SDCTime_ServerTimeZone.substring(0, 11);
+            prodajaDetails.push({
+              br: "",
+              details: [],
+            });
+            tempLager -= count;
+            count = 0;
+          }
+          count += sellData[i].TotalAmount;
+
+          prodajaDetails[prodajaDetails.length - 1].br = `Prodaja br: ${
+            prodajaDetails.length
+          } datum ${sellData[i].SDCTime_ServerTimeZone.substring(
+            0,
+            11
+          )} Ukupan iznos ==> ${count} din`;
+
+          for (let j = 0; j < sellData[i].Items.length; j++) {
+            prodajaDetails[prodajaDetails.length - 1].details.push({
+              id: `${
+                prodajaDetails[prodajaDetails.length - 1].details.length + 1
+              }`,
+              name: `${sellData[i].Items[j].Name}`,
+              price: `${sellData[i].Items[j].UnitPrice}`,
+              ammount: `${sellData[i].Items[j].Quantity}`,
+            });
+          }
+        }
+        if (sellData[0].Cashier !== "Nenad") {
+          alert("Ucitali ste pogresan fajl");
+          return;
+        }
+        localStorage.setItem("prodaja", JSON.stringify(prodajaDetails));
+        localStorage.setItem("lager", JSON.stringify(tempLager - count));
+
+        alert(`Podaci prodaje su ucitani`);
+      };
+
+      reader.readAsText(e.target.files[0]);
+    } else alert("Ucitali ste pogresan fajl");
+  };
 
   function SellComplete() {
-    for (let i = 0; i < sellDetail.length; i++) {
-      const tIndex = (e) => e.id === sellDetail[i].id;
-      const sIndex = Baza.findIndex(tIndex);
-      Baza[sIndex].stock -= sellDetail[i].ammount;
+    if (sellDetail.length) {
+      for (let i = 0; i < sellDetail.length; i++) {
+        const tIndex = (e) => e.id === sellDetail[i].id;
+        const sIndex = Baza.findIndex(tIndex);
+        Baza[sIndex].stock -= sellDetail[i].ammount;
+      }
+      localStorage.setItem("baza", JSON.stringify(Baza));
+      let tempPrice = parseFloat | localStorage.getItem("lager");
+      tempPrice -= racun;
+      localStorage.setItem("lager", tempPrice.toString());
+      const sellTotall = (br, details) => {
+        return { br: br, details: details };
+      };
+      if (!localStorage.getItem("prodaja")) {
+        let prodajaDetails = [];
+        prodajaDetails[0] = sellTotall(
+          `Prodaja br: ${idProdaje} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
+          sellDetail
+        );
+        localStorage.setItem("prodaja", JSON.stringify(prodajaDetails));
+      } else {
+        let prodajaDetails = JSON.parse(localStorage.getItem("prodaja"));
+        prodajaDetails[prodajaDetails.length] = sellTotall(
+          `Prodaja br: ${idProdaje} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
+          sellDetail
+        );
+        localStorage.setItem("prodaja", JSON.stringify(prodajaDetails));
+      }
+      setActive(0);
     }
-    localStorage.setItem("baza", JSON.stringify(Baza));
-    let tempPrice = parseFloat | localStorage.getItem("lager");
-    tempPrice -= racun;
-    localStorage.setItem("lager", tempPrice.toString());
-    const sellTotall = (br, details) => {
-      return { br: br, details: details };
-    };
-    if (!localStorage.getItem("prodaja")) {
-      let prodajaDetails = [];
-      prodajaDetails[0] = sellTotall(
-        `Prodaja br: ${idProdaje} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
-        sellDetail
-      );
-      localStorage.setItem("prodaja", JSON.stringify(prodajaDetails));
-    } else {
-      let prodajaDetails = JSON.parse(localStorage.getItem("prodaja"));
-      prodajaDetails[prodajaDetails.length] = sellTotall(
-        `Prodaja br: ${idProdaje} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
-        sellDetail
-      );
-      localStorage.setItem("prodaja", JSON.stringify(prodajaDetails));
-    }
-    setActive(0);
   }
 
   return (
     <div>
+      <input
+        type="file"
+        onChange={showFile}
+        ref={selector}
+        style={{ display: "none" }}
+      />
       <div className="fixed forma">
-        <div className="unos" style={{ width: "270px" }}>
-          {operacija}
-          <div style={{ marginBottom: "2px" }}>
-            <input
-              type="number"
-              onFocus={(e) => (e.target.value = "")}
-              style={{ paddingLeft: "10px" }}
-              placeholder="Sifra artikla:"
-              value={art}
-              autoFocus={true}
-              ref={artRef}
-              onChange={(e) => searchArt(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  Search(e.target.value);
-                  searchArt("");
-                }
-              }}
-            ></input>
-            <button
-              className="btn"
-              style={{ position: "absolute", height: "45px" }}
-              onClick={() => Search(art)}
-            >
-              <img src={searchImg} alt=""></img>
-            </button>
+        <div style={{ display: "flex" }}>
+          <div className="unos" style={{ width: "270px" }}>
+            {operacija}
+            <div style={{ marginBottom: "2px" }}>
+              <input
+                type="number"
+                onFocus={(e) => (e.target.value = "")}
+                style={{ paddingLeft: "10px" }}
+                placeholder="Sifra artikla:"
+                value={art}
+                autoFocus={true}
+                ref={artRef}
+                onChange={(e) => searchArt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    Search(e.target.value);
+                    searchArt("");
+                  }
+                }}
+              ></input>
+              <button
+                className="btn"
+                style={{ position: "absolute", height: "45px" }}
+                onClick={() => Search(art)}
+              >
+                <img src={searchImg} alt=""></img>
+              </button>
+            </div>
+            <div style={{ marginBottom: "2px" }}>
+              <input
+                type="number"
+                style={{ paddingLeft: "10px" }}
+                placeholder="Kolicina:"
+                value={kol}
+                ref={inputRef}
+                onChange={(e) => setKol(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    Prodaj(e.target.value);
+                    setKol(0);
+                  }
+                }}
+              ></input>
+              <button
+                className="btn"
+                style={{ position: "absolute", height: "45px" }}
+                onClick={() => Prodaj(kol)}
+              >
+                <img src={okImg} alt=""></img>
+              </button>
+            </div>
           </div>
-          <div style={{ marginBottom: "2px" }}>
-            <input
-              type="number"
-              style={{ paddingLeft: "10px" }}
-              placeholder="Kolicina:"
-              value={kol}
-              ref={inputRef}
-              onChange={(e) => setKol(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  Prodaj(e.target.value);
-                  setKol(0);
-                }
-              }}
-            ></input>
-            <button
-              className="btn"
-              style={{ position: "absolute", height: "45px" }}
-              onClick={() => Prodaj(kol)}
-            >
-              <img src={okImg} alt=""></img>
-            </button>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="slikaP" style={{ marginLeft: "80px" }}>
+              <img src={saveImg} alt="" onClick={() => SellComplete()}></img>
+            </div>
+            <div className="slikaP">
+              <img
+                src={openImg}
+                alt=""
+                onClick={() => selector.current.click()}
+              ></img>
+            </div>
           </div>
-        </div>
-        <div className="slika">
-          <img src={saveImg} alt="" onClick={() => SellComplete()}></img>
         </div>
         {artikl}
         <hr></hr>

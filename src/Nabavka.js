@@ -160,35 +160,37 @@ function Nabavka({ setActive }) {
   }
 
   function buyComplete() {
-    for (let i = 0; i < buyDetail.length; i++) {
-      const tIndex = (e) => e.id === buyDetail[i].id;
-      const sIndex = Baza.findIndex(tIndex);
-      Baza[sIndex].stock += buyDetail[i].ammount;
-    }
-    localStorage.setItem("baza", JSON.stringify(Baza));
-    let tempPrice = parseFloat(localStorage.getItem("lager"));
-    tempPrice += racun;
-    localStorage.setItem("lager", tempPrice.toString());
-    const buyTotall = (br, details) => {
-      return { br: br, details: details };
-    };
-    if (!localStorage.getItem("Nabavka")) {
-      let NabavkaDetails = [];
+    if (buyDetail.length) {
+      for (let i = 0; i < buyDetail.length; i++) {
+        const tIndex = (e) => e.id === buyDetail[i].id;
+        const sIndex = Baza.findIndex(tIndex);
+        Baza[sIndex].stock += buyDetail[i].ammount;
+      }
+      localStorage.setItem("baza", JSON.stringify(Baza));
+      let tempPrice = parseFloat(localStorage.getItem("lager"));
+      tempPrice += racun;
+      localStorage.setItem("lager", tempPrice.toString());
+      const buyTotall = (br, details) => {
+        return { br: br, details: details };
+      };
+      if (!localStorage.getItem("Nabavka")) {
+        let NabavkaDetails = [];
 
-      NabavkaDetails[0] = buyTotall(
-        `Nabavka br: ${idNabavke} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
-        buyDetail
-      );
-      localStorage.setItem("Nabavka", JSON.stringify(NabavkaDetails));
-    } else {
-      let NabavkaDetails = JSON.parse(localStorage.getItem("Nabavka"));
-      NabavkaDetails[NabavkaDetails.length] = buyTotall(
-        `Nabavka br: ${idNabavke} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
-        buyDetail
-      );
-      localStorage.setItem("Nabavka", JSON.stringify(NabavkaDetails));
+        NabavkaDetails[0] = buyTotall(
+          `Nabavka br: ${idNabavke} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
+          buyDetail
+        );
+        localStorage.setItem("Nabavka", JSON.stringify(NabavkaDetails));
+      } else {
+        let NabavkaDetails = JSON.parse(localStorage.getItem("Nabavka"));
+        NabavkaDetails[NabavkaDetails.length] = buyTotall(
+          `Nabavka br: ${idNabavke} datum ${datumStr} Ukupan iznos ==> ${racun} din`,
+          buyDetail
+        );
+        localStorage.setItem("Nabavka", JSON.stringify(NabavkaDetails));
+      }
+      setActive(0);
     }
-    setActive(0);
   }
 
   return (

@@ -76,6 +76,7 @@ button {
 }
 .slikaP {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 10px;
 }
 .slika:active,
 .slikaP:active {
@@ -98,5 +99,5 @@ pre {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: papayawhip;
   margin-top: 280px;
-  height: 100vh;
+  height: 630px;
 }

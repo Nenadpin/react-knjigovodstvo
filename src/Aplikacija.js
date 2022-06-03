@@ -1,17 +1,23 @@
 import { useState } from "react";
 import ChangeImg from "./img/podesi.png";
+import SearchIcon from "./img/search_icon.png";
 
 function Aplikacija({ setActive }) {
   let Baza = JSON.parse(localStorage.getItem("baza"));
+  const [filteredBaza, setFilteredBaza] = useState([]);
   let lager = localStorage.getItem("lager");
   const [art, setArt] = useState("");
   const [artName, setArtName] = useState("");
   const [artPrice, setArtPrice] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   if (!Baza) setActive(0);
-  const operacija = (
+  const operacija = isDisabled ? (
     <p className="operacija">Izmena parametara proizvoda: {`${art}`}</p>
+  ) : (
+    <p className="operacija">Pretraga proizvoda</p>
   );
+
   const vrednost = (
     <p className="operacija">Knjigovodstveno stanje: {`${lager}`}</p>
   );
@@ -32,11 +38,39 @@ function Aplikacija({ setActive }) {
   function Promeni() {
     if (art) {
       let i = Baza.findIndex((e) => e.id === art);
-      Baza[i].name = artName;
-      Baza[i].price = artPrice;
+      Baza[i].name = artName.toUpperCase();
       localStorage.setItem("baza", JSON.stringify(Baza));
       setActive(0);
+    } else {
+      setIsDisabled(true);
+      setFilteredBaza([]);
     }
+  }
+
+  function filterArt() {
+    setIsDisabled(false);
+    if (art) {
+      setFilteredBaza(
+        Baza.filter((x) => {
+          return x.id >= art;
+        })
+      );
+    } else if (artName) {
+      setFilteredBaza(
+        Baza.filter((x) => {
+          return x.name.includes(artName.toUpperCase());
+        })
+      );
+    } else if (artPrice) {
+      setFilteredBaza(
+        Baza.filter((x) => {
+          return x.price >= parseInt(artPrice);
+        })
+      );
+    }
+    setArt("");
+    setArtName("");
+    setArtPrice("");
   }
 
   return (
@@ -48,13 +82,16 @@ function Aplikacija({ setActive }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "400px",
+              width: "330px",
               float: "left",
             }}
           >
             <input
               type="number"
-              onFocus={(e) => (e.target.value = "")}
+              onFocus={(e) => {
+                e.target.value = "";
+                setArt("");
+              }}
               style={{ paddingLeft: "10px" }}
               placeholder="Sifra artikla:"
               value={art}
@@ -68,7 +105,6 @@ function Aplikacija({ setActive }) {
             ></input>
             <input
               type="text"
-              onFocus={(e) => (e.target.value = "")}
               style={{ paddingLeft: "10px" }}
               placeholder="Naziv artikla:"
               value={artName}
@@ -76,32 +112,57 @@ function Aplikacija({ setActive }) {
             ></input>
             <input
               type="number"
-              onFocus={(e) => (e.target.value = "")}
               style={{ paddingLeft: "10px" }}
               placeholder="cena:"
               value={artPrice}
+              disabled={isDisabled}
               onChange={(e) => setArtPrice(e.target.value)}
             ></input>
           </div>
           <div
             style={{
               display: "flex",
-              width: "150px",
-              float: "left",
               flexDirection: "column",
+              width: "250px",
+              float: "left",
               marginLeft: "20px",
               alignItems: "center",
             }}
           >
-            <img
-              className="slikaP"
-              src={ChangeImg}
-              alt=""
-              onClick={() => Promeni()}
-            ></img>
-            <span style={{ marginTop: "20px", fontWeight: "bold" }}>
-              ZAMENI
-            </span>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <img
+                className="slikaP"
+                src={ChangeImg}
+                alt=""
+                onClick={() => Promeni()}
+              ></img>
+              <img
+                className="slikaP"
+                src={SearchIcon}
+                alt=""
+                onClick={() => filterArt()}
+              ></img>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "240px",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <span style={{ marginTop: "10px", fontWeight: "bold" }}>
+                ZAMENI
+              </span>
+              <span style={{ marginTop: "10px", fontWeight: "bold" }}>
+                TRAZI
+              </span>
+            </div>
           </div>
         </div>
         <hr></hr>
@@ -111,16 +172,22 @@ function Aplikacija({ setActive }) {
         style={{
           display: "flex",
           flexDirection: "column",
-          maxHeight: "800px",
+          maxHeight: "630px",
           overflowY: "auto",
           marginLeft: "90px",
         }}
       >
-        {Baza.map(({ id, name, price, stock }) => (
-          <p key={id} style={{ margin: "0px" }}>
-            {id} {name} {price} - {stock} kom
-          </p>
-        ))}
+        {isDisabled
+          ? Baza.map(({ id, name, price, stock }) => (
+              <p key={id} style={{ margin: "0px" }}>
+                {id} {name} {price} - {stock} kom
+              </p>
+            ))
+          : filteredBaza.map(({ id, name, price, stock }) => (
+              <p key={id} style={{ margin: "0px" }}>
+                {id} {name} {price} - {stock} kom
+              </p>
+            ))}
       </pre>
     </>
   );
