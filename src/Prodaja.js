@@ -37,7 +37,11 @@ function Prodaja({ setActive }) {
   let racunP = (
     <p style={{ fontWeight: "bold" }}>Vrednost prodate robe: {`${racun}`}</p>
   );
-  let artikl = <p>{`${artP}`}</p>;
+  let artikl = (
+    <span>
+      <p>{`${artP}`}</p>
+    </span>
+  );
   function Search(a) {
     let ObjArt = Baza.filter((x) => {
       return x.id === parseInt(a);
@@ -249,14 +253,20 @@ function Prodaja({ setActive }) {
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div className="slikaP" style={{ marginLeft: "80px" }}>
-              <img src={saveImg} alt="" onClick={() => SellComplete()}></img>
+              <figure>
+                <img src={saveImg} alt="" onClick={() => SellComplete()}></img>
+                <figcaption>Proknjizi</figcaption>
+              </figure>
             </div>
             <div className="slikaP">
-              <img
-                src={openImg}
-                alt=""
-                onClick={() => selector.current.click()}
-              ></img>
+              <figure>
+                <img
+                  src={openImg}
+                  alt=""
+                  onClick={() => selector.current.click()}
+                ></img>
+                <figcaption>Ucitaj</figcaption>
+              </figure>
             </div>
           </div>
         </div>

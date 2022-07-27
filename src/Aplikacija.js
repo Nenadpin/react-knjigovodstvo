@@ -135,18 +135,24 @@ function Aplikacija({ setActive }) {
                 flexDirection: "row",
               }}
             >
-              <img
-                className="slikaP"
-                src={ChangeImg}
-                alt=""
-                onClick={() => Promeni()}
-              ></img>
-              <img
-                className="slikaP"
-                src={SearchIcon}
-                alt=""
-                onClick={() => filterArt()}
-              ></img>
+              <figure>
+                <img
+                  className="slikaP"
+                  src={ChangeImg}
+                  alt=""
+                  onClick={() => Promeni()}
+                ></img>
+                <figcaption>Izmeni</figcaption>
+              </figure>
+              <figure>
+                <img
+                  className="slikaP"
+                  src={SearchIcon}
+                  alt=""
+                  onClick={() => filterArt()}
+                ></img>
+                <figcaption>Trazi</figcaption>
+              </figure>
             </div>
             <div
               style={{
@@ -155,14 +161,7 @@ function Aplikacija({ setActive }) {
                 width: "240px",
                 justifyContent: "space-evenly",
               }}
-            >
-              <span style={{ marginTop: "10px", fontWeight: "bold" }}>
-                ZAMENI
-              </span>
-              <span style={{ marginTop: "10px", fontWeight: "bold" }}>
-                TRAZI
-              </span>
-            </div>
+            ></div>
           </div>
         </div>
         <hr></hr>

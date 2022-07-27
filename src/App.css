@@ -69,14 +69,16 @@ button {
 
 .slika {
   position: absolute;
-  top: 30px;
+  top: 15px;
   right: 80px;
-  height: 100px;
+  cursor: pointer;
+
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .slikaP {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin: 10px;
+  cursor: pointer;
 }
 .slika:active,
 .slikaP:active {
@@ -90,6 +92,7 @@ input {
 }
 .btn {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
 }
 .btn:active {
   box-shadow: none;
@@ -100,4 +103,10 @@ pre {
   background-color: papayawhip;
   margin-top: 280px;
   height: 630px;
+}
+figure {
+  margin: 0;
+  text-align: center;
+  font-weight: bolder;
+  padding-bottom: 5px;
 }

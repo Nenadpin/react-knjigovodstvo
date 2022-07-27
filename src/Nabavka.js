@@ -247,7 +247,10 @@ function Nabavka({ setActive }) {
           </div>
         </div>
         <div className="slika">
-          <img src={saveImg} alt="" onClick={() => buyComplete()}></img>
+          <figure>
+            <img src={saveImg} alt="" onClick={() => buyComplete()}></img>
+            <figcaption>Nabavi</figcaption>
+          </figure>
         </div>
         {newArt ? NewArtikl : artikl}
         <hr></hr>

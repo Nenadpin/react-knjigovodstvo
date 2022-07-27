@@ -172,7 +172,10 @@ function Nivelacija({ setActive }) {
           </div>
         </div>
         <div className="slika">
-          <img src={saveImg} alt="" onClick={() => LevelComplete()}></img>
+          <figure>
+            <img src={saveImg} alt="" onClick={() => LevelComplete()}></img>
+            <figcaption>Nivelisi</figcaption>
+          </figure>
         </div>
         {artikl}
         <hr></hr>

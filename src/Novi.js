@@ -36,21 +36,30 @@ function Novi({ setActive }) {
 
   return (
     <div>
-      <div className="fixed" style={{ height: "150px" }}>
+      <div className="fixed" style={{ height: "210px" }}>
         <div>
           <div style={{ width: "270px" }}>
             <p className="operacija">Izaberite bazu</p>
           </div>
-          <p style={{ fontWeight: "bold", fontSize: "large" }}>
+          <p style={{ fontSize: "large" }}>
             Nema baze podataka <br />
             na ovom uredjaju...
+            <br />
+            <br />
+            Sifarnik mora biti u .csv formatu <br />
+            sa 8 kolona u obliku: <br />
+            <br />
+            sifra,naziv,,,cena,,,kol
           </p>
           <div className="slika">
-            <img
-              src={openImg}
-              alt=""
-              onClick={() => selector.current.click()}
-            />
+            <figure>
+              <img
+                src={openImg}
+                alt=""
+                onClick={() => selector.current.click()}
+              />
+              <figcaption>Ucitaj CSV</figcaption>
+            </figure>
             <div>
               <input
                 type="file"
