@@ -50,6 +50,7 @@ function Nabavka({ setActive }) {
       </span>
       <input
         type={"text"}
+        placeholder="Naziv artikla"
         autoFocus
         ref={newArtName}
         onBlur={() => {
@@ -59,7 +60,7 @@ function Nabavka({ setActive }) {
           if (e.key === "Enter") newArtPrice.current.focus();
         }}
         style={{
-          width: "300px",
+          width: "280px",
           left: "90px",
           paddingLeft: "10px",
           marginLeft: "10px",
@@ -67,9 +68,10 @@ function Nabavka({ setActive }) {
       ></input>
       <input
         type={"number"}
+        placeholder="Cena"
         ref={newArtPrice}
         style={{
-          width: "50px",
+          width: "70px",
           left: "490px",
           paddingLeft: "10px",
           marginLeft: "10px",
@@ -91,6 +93,7 @@ function Nabavka({ setActive }) {
             id: parseInt(art),
             name: newArtName.current.value,
             price: newArtPrice.current.value,
+            stock: 0,
           };
           setNewArt(false);
           localStorage.setItem("baza", JSON.stringify(Baza));

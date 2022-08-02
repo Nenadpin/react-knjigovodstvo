@@ -42,14 +42,31 @@ function Novi({ setActive }) {
             <p className="operacija">Izaberite bazu</p>
           </div>
           <p style={{ fontSize: "large" }}>
-            Nema baze podataka <br />
-            na ovom uredjaju...
+            Nema baze podataka na ovom uredjaju...
+          </p>
+          <p>
+            Sifarnik mora biti u .csv formatu sa 8 kolona:
             <br />
-            <br />
-            Sifarnik mora biti u .csv formatu <br />
-            sa 8 kolona u obliku: <br />
             <br />
             sifra,naziv,,,cena,,,kol
+            <br />
+            <br />
+            Za pocetak rada, mozete{" "}
+            <span
+              style={{
+                color: "blue",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                let tempBaza = [];
+                let tempLager = 0;
+                localStorage.setItem("baza", JSON.stringify(tempBaza));
+                localStorage.setItem("lager", tempLager);
+                setActive(0);
+              }}
+            >
+              inicijalizovati praznu bazu
+            </span>
           </p>
           <div className="slika">
             <figure>
