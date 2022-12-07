@@ -8,7 +8,7 @@ import Pregled from "./Pregled";
 import Aplikacija from "./Aplikacija";
 import { useState } from "react";
 
-function App() {
+function BookApp() {
   const [active, setActive] = useState(0);
 
   return (
@@ -23,4 +23,4 @@ function App() {
     </header>
   );
 }
-export default App;
+export default BookApp;
