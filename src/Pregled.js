@@ -148,26 +148,34 @@ function Pregled({ setActive }) {
           marginTop: "250px",
         }}
       >
-        {idPregled === "PROIZVODI"
-          ? prikaz
+        {idPregled === "PROIZVODI" ? (
+          <div className="tabela">
+            {prikaz
               .filter((x) => x.stock !== 0)
               .map(({ id, name, price, stock }) => (
-                <p key={id} style={{ margin: "0px" }}>
-                  {id} {name} {price} - {stock} kom
-                </p>
-              ))
-          : prikaz.map(({ br }) => (
-              <p key={br} style={{ margin: "0px" }}>
-                <button
-                  className="btn"
-                  style={{ height: "30px" }}
-                  onClick={() => Prikazi(br)}
-                >
-                  <img src={delImg} alt=""></img>
-                </button>
-                {br}{" "}
-              </p>
-            ))}
+                <>
+                  <span key={id}>{id}</span>
+                  <span>{name} </span>
+                  <span>{price}</span>
+                  <span>{stock}</span>
+                  <span> kom</span>
+                </>
+              ))}
+          </div>
+        ) : (
+          prikaz.map(({ br }) => (
+            <p key={br} style={{ margin: "0px" }}>
+              <button
+                className="btn"
+                style={{ height: "30px" }}
+                onClick={() => Prikazi(br)}
+              >
+                <img src={delImg} alt=""></img>
+              </button>
+              {br}{" "}
+            </p>
+          ))
+        )}
       </pre>
     </div>
   );
