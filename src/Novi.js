@@ -25,6 +25,7 @@ function Novi({ setActive }) {
       for (let i = 0; i < a.length; i++) {
         Baza[i] = parseRecord(a[i]);
         cenaLager += Baza[i].price * Baza[i].stock;
+        console.log(Baza[i].id, cenaLager);
       }
       localStorage.setItem("baza", JSON.stringify(Baza));
       localStorage.setItem("lager", JSON.stringify(cenaLager));

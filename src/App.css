@@ -101,7 +101,7 @@ input {
 pre {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: papayawhip;
-  margin-top: 280px;
+  margin-top: 250px;
   height: 630px;
 }
 figure {
@@ -109,4 +109,8 @@ figure {
   text-align: center;
   font-weight: bolder;
   padding-bottom: 5px;
+}
+.tabela {
+  display: grid;
+  grid-template-columns: 50px 350px 60px 60px 60px;
 }
